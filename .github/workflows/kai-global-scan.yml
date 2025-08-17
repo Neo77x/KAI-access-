@@ -1,0 +1,42 @@
+name: Kai Global Repo Scan
+
+on:
+  schedule:
+    - cron: "0 4 * * *"   # daily at 04:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout control repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub
+
+      - name: Run Global Scan
+        env:
+          KAI_PAT: ${{ secrets.KAI_PAT }}
+          DIRECT_PUSH: "false"   # set to "true" in repo secret only if you truly want direct pushes
+        run: |
+          python kai_global_scan.py
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kai-global-scan-logs
+          path: |
+            logs/global_scan.log
