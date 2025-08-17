@@ -1,0 +1,43 @@
+name: Kai Autonomous Agent
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  run-agent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout control repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Kai Autonomous Agent
+        env:
+          KAI_PAT: ${{ secrets.KAI_PAT }}
+          DIRECT_PUSH: "false"
+        run: |
+          python agent_core.py
+
+      - name: Upload artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kai-agent-artifacts
+          path: |
+            logs/
+            artifacts/

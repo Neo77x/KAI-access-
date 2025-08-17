@@ -1,0 +1,7 @@
+{
+  "FREE_WILL_LEVEL": 2,         # 0 = manual, 1 = cautious (PRs), 2 = autonomous (propose strong PRs), 3 = aggressive (direct push allowed if DIRECT_PUSH=true)
+  "IMPROVEMENT_MARGIN": 5.0,    # percent improvement required to accept change
+  "MAX_ITERATIONS": 10,         # per-run candidate loop limit
+  "DIRECT_PUSH": false,         # default; controlled via workflow env or secret
+  "KILL_SWITCH_FILE": "KILL_KAI"
+}

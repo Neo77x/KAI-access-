@@ -5,3 +5,5 @@ flake8
 pytest
 networkx
 python-dateutil
+llama-cpp-python
+openai
