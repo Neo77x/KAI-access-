@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Logs & runtime files
+*.log
+Logs/
+voice_status.txt
+kai_brain_log.txt
+kai_crash.log
+Kai_Learning.log
+Kai_Log.txt
+
+# Backups
+backup_*/
+*.bak
+*.bak_*/
+
+# Secrets
+token.sec
+config.json
+kai_identity.json
+kai_memory.json
+kai_knowledge.db
+
+# Generated data
+Kai_Data/
+Kai_Online_Data/
+processed_repos.json
+merge_suggestions.json
+versions/
+
+# Jupyter notebooks (KEEP notebooks, IGNORE checkpoints)
+*.ipynb_checkpoints/
+
+# System
+.DS_Store
+Thumbs.db

@@ -1,0 +1,22 @@
+name: Kai Repo Cleanup
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Remove junk files
+        run: |
+          rm -rf Logs/ backup_*/ *.log *.bak
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Auto-cleanup: remove logs/backups" || echo "No changes"
+          git push
