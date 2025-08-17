@@ -10,7 +10,7 @@ __pycache__/
 env/
 venv/
 
-# Logs & runtime files
+# Logs & runtime files (keep handled by artifacts)
 *.log
 Logs/
 voice_status.txt

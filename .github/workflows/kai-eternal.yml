@@ -37,3 +37,15 @@ jobs:
       - name: Run Kai Eternal Loop
         run: |
           python kai.py || echo "Kai script finished with exit code \True"
+      - name: Upload logs as artifacts
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: Kai-Logs
+          path: |
+            *.log
+            Logs/
+            kai_brain_log.txt
+            kai_crash.log
+            Kai_Learning.log
+            Kai_Log.txt
