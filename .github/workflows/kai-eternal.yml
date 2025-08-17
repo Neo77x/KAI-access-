@@ -1,0 +1,39 @@
+name: Kai Eternal Workflow
+
+on:
+  schedule:
+    - cron: "0 0 * * *"   # Runs daily at midnight UTC
+  push:
+    branches:
+      - master
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Remove junk files
+        run: |
+          rm -rf Logs/ backup_*/ *.log *.bak
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Auto-cleanup: remove logs/backups" || echo "No changes"
+          git push
+
+  kai-daily:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt || echo "No requirements file"
+      - name: Run Kai Eternal Loop
+        run: |
+          python kai.py || echo "Kai script finished with exit code \True"
