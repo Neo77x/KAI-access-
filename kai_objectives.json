@@ -1,0 +1,8 @@
+[
+  { "task": "Add .editorconfig if missing", "deadline": "2025-08-20", "enabled": true },
+  { "task": "Ensure README has Maintained-by badge", "deadline": "2025-08-21", "enabled": true },
+  { "task": "Run flake8 + black auto-format", "deadline": "2025-08-22", "enabled": true },
+  { "task": "Run pytest (if tests present)", "deadline": "2025-08-23", "enabled": true },
+  { "task": "Build/update knowledge graph", "deadline": "2025-08-24", "enabled": true },
+  { "task": "Benchmark sample scripts (if any)", "deadline": "2025-08-25", "enabled": true }
+]

@@ -1,0 +1,45 @@
+name: Kai 2.0 Auto-Evolve
+
+on:
+  schedule:
+    - cron: "0 3 * * *"   # daily at 03:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  evolve:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Control Repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyGithub requests black flake8 pytest networkx
+
+      - name: Run Kai Evolution Orchestrator
+        env:
+          KAI_PAT: ${{ secrets.KAI_PAT }}   # PAT with scopes: repo, workflow
+          OWNER: Neo77x
+          DIRECT_PUSH: "false"              # set to "true" for direct push instead of PR
+          TRENDING_LANG: "python"           # simple trending filter
+        run: |
+          python kai_evolve.py
+
+      - name: Upload logs/artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: kai-evolve-artifacts
+          path: |
+            logs/
+            artifacts/
